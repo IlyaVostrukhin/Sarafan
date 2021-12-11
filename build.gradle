@@ -22,11 +22,13 @@ dependencies {
 	implementation 'org.springframework.session:spring-session-jdbc'
 	implementation 'org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.0.0.RELEASE'
 	implementation 'org.postgresql:postgresql'
+	implementation 'org.jsoup:jsoup:1.11.3'
 	implementation 'org.projectlombok:lombok'
 	implementation 'javax.xml.bind:jaxb-api'
 	implementation group: 'org.glassfish.jaxb', name: 'jaxb-core', version: '3.0.2'
 	implementation group: 'javax.xml', name: 'jaxb-impl', version: '2.1'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	annotationProcessor 'org.projectlombok:lombok'
 }
 
 test {

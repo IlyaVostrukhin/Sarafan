@@ -2,6 +2,7 @@ package com.projects.sarafan.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonView;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -17,39 +18,32 @@ import java.time.LocalDateTime;
 @Table
 @ToString(of = {"id", "text"})
 @EqualsAndHashCode(of = {"id"})
+@Data
 public class Message {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonView(Views.Id.class)
     private Long id;
+
     @JsonView(Views.IdName.class)
     private String text;
+
     @Column(updatable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonView(Views.FullMessage.class)
     private LocalDateTime creationDate;
 
-    public Long getId() {
-        return id;
-    }
+    @JsonView(Views.FullMessage.class)
+    private String link;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @JsonView(Views.FullMessage.class)
+    private String linkTitle;
 
-    public String getText() {
-        return text;
-    }
+    @JsonView(Views.FullMessage.class)
+    private String linkDescription;
 
-    public void setText(String text) {
-        this.text = text;
-    }
+    @JsonView(Views.FullMessage.class)
+    private String linkCover;
 
-    public LocalDateTime getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(LocalDateTime creationDate) {
-        this.creationDate = creationDate;
-    }
 }
