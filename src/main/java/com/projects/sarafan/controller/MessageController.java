@@ -2,6 +2,7 @@ package com.projects.sarafan.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.projects.sarafan.domain.Message;
+import com.projects.sarafan.domain.User;
 import com.projects.sarafan.domain.Views;
 import com.projects.sarafan.dto.EventType;
 import com.projects.sarafan.dto.MetaDto;
@@ -14,6 +15,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -62,9 +64,13 @@ public class MessageController {
     }
 
     @PostMapping
-    public Message create(@RequestBody Message message) throws IOException {
+    public Message create(
+            @RequestBody Message message,
+            @AuthenticationPrincipal User user
+    ) throws IOException {
         message.setCreationDate(LocalDateTime.now());
         fillMeta(message);
+        message.setAuthor(user);
         Message updatedMessage = messageRepository.save(message);
         wsSender.accept(EventType.CREATE, updatedMessage);
         return updatedMessage;
@@ -116,10 +122,10 @@ public class MessageController {
 
         return
                 new MetaDto(
-                getContent(title.first()),
-                getContent(description.first()),
-                getContent(cover.first())
-        );
+                        getContent(title.first()),
+                        getContent(description.first()),
+                        getContent(cover.first())
+                );
     }
 
     private String getContent(Element element) {
