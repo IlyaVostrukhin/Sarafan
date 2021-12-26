@@ -1,5 +1,5 @@
 package com.projects.sarafan.dto;
 
 public enum ObjectType {
-    MESSAGE
+    MESSAGE, COMMENT
 }
