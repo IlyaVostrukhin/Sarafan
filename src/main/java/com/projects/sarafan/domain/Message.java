@@ -11,8 +11,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table
@@ -34,6 +38,15 @@ public class Message {
     @JsonView(Views.FullMessage.class)
     private LocalDateTime creationDate;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @JsonView(Views.FullMessage.class)
+    private User author;
+
+    @OneToMany(mappedBy = "message", orphanRemoval = true)
+    @JsonView(Views.FullMessage.class)
+    private List<Comment> comments;
+
     @JsonView(Views.FullMessage.class)
     private String link;
 
@@ -46,4 +59,9 @@ public class Message {
     @JsonView(Views.FullMessage.class)
     private String linkCover;
 
+    public void setComments(List<Comment> comments) {
+        if (comments != null) {
+            this.comments.addAll(comments);
+        }
+    }
 }
