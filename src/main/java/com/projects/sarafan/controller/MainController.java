@@ -62,7 +62,7 @@ public class MainController {
 
             Sort sort = Sort.by(Sort.Direction.DESC, "id");
             PageRequest pageRequest = PageRequest.of(0, MESSAGES_PER_PAGE, sort);
-            MessagePageDto messagePageDto = messageService.findAll(pageRequest);
+            MessagePageDto messagePageDto = messageService.findForUser(pageRequest, user);
 
             String messages = messageWriter.writeValueAsString(messagePageDto.getMessages());
 
