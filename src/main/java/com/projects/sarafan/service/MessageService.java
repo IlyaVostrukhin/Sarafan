@@ -32,11 +32,11 @@ import java.util.stream.Collectors;
 @Service
 public class MessageService {
 
-    private static final String URL_PATTERN = "https?:\\/\\/?[\\w\\d\\._\\-%\\/\\?=&#]+";
-    private static final String IMAGE_PATTERN = "\\.(jpeg|jpg|gif|png)$";
+    private static String URL_PATTERN = "https?:\\/\\/?[\\w\\d\\._\\-%\\/\\?=&#]+";
+    private static String IMAGE_PATTERN = "\\.(jpeg|jpg|gif|png)$";
 
-    private static final Pattern URL_REGEX = Pattern.compile(URL_PATTERN, Pattern.CASE_INSENSITIVE);
-    private static final Pattern IMAGE_REGEX = Pattern.compile(IMAGE_PATTERN, Pattern.CASE_INSENSITIVE);
+    private static Pattern URL_REGEX = Pattern.compile(URL_PATTERN, Pattern.CASE_INSENSITIVE);
+    private static Pattern IMAGE_REGEX = Pattern.compile(IMAGE_PATTERN, Pattern.CASE_INSENSITIVE);
 
     private final MessageRepository messageRepository;
     private final UserSubscriptionRepository userSubscriptionRepository;
@@ -50,7 +50,7 @@ public class MessageService {
     ) {
         this.messageRepository = messageRepository;
         this.userSubscriptionRepository = userSubscriptionRepository;
-        this.wsSender = wsSender.getSender(ObjectType.MESSAGE, Views.IdName.class);
+        this.wsSender = wsSender.getSender(ObjectType.MESSAGE, Views.FullMessage.class);
     }
 
     private void fillMeta(Message message) throws IOException {
@@ -100,7 +100,7 @@ public class MessageService {
     }
 
     public Message update(Message messageFromDb, Message message) throws IOException {
-        BeanUtils.copyProperties(message, messageFromDb, "id", "creationDate");
+        messageFromDb.setText(message.getText());
         fillMeta(messageFromDb);
         Message updatedMessage = messageRepository.save(messageFromDb);
         wsSender.accept(EventType.UPDATE, updatedMessage);
@@ -119,6 +119,7 @@ public class MessageService {
     public MessagePageDto findForUser(Pageable pageable, User user) {
         List<User> channels = userSubscriptionRepository.findBySubscriber(user)
                 .stream()
+                .filter(UserSubscription::isActive)
                 .map(UserSubscription::getChannel)
                 .collect(Collectors.toList());
 

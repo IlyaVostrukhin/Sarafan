@@ -21,6 +21,7 @@ import java.util.Set;
 @Data
 @EqualsAndHashCode(of = {"id"})
 @ToString(of = { "id", "name" })
+//public class User {
 public class User implements Serializable {
     @Id
     @JsonView(Views.IdName.class)

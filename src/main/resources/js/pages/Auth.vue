@@ -1,13 +1,13 @@
 <template>
     <v-container>
         Необходимо авторизоваться через
-        <a href="/login">Google</a>
+        <a href="/sarafan/login">Google</a>
     </v-container>
 </template>
 
 <script>
     export default {
-        name: "Auth"
+        name: 'Auth',
     }
 </script>
 

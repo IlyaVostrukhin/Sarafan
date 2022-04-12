@@ -12,7 +12,7 @@
 
 <script>
     export default {
-        name: "YouTube",
+        name: 'YouTube',
         props: ['src'],
         computed: {
             targetSrc() {

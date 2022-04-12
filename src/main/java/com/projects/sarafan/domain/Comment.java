@@ -18,15 +18,15 @@ import javax.persistence.Table;
 public class Comment {
     @Id
     @GeneratedValue
-    @JsonView(Views.Id.class)
+    @JsonView(Views.IdName.class)
     private Long id;
 
-    @JsonView(Views.Id.class)
+    @JsonView(Views.IdName.class)
     private String text;
 
     @ManyToOne
     @JoinColumn(name = "message_id")
-    @JsonView(Views.IdName.class)
+    @JsonView(Views.FullComment.class)
     private Message message;
 
     @ManyToOne

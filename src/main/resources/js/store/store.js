@@ -73,7 +73,7 @@ export default new Vuex.Store({
         },
         updateCurrentPageMutation(state, currentPage) {
             state.currentPage = currentPage
-        },
+        }
     },
     actions: {
         async addMessageAction({commit, state}, message) {
