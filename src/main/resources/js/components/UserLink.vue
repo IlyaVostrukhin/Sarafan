@@ -24,11 +24,11 @@
 
 <script>
     export default {
-        name: "UserLink",
+        name: 'UserLink',
         props: ['user', 'size'],
         computed: {
             userName() {
-                return this.user ? this.user.name : "unknown"
+                return this.user ? this.user.name : 'unknown'
             }
         },
     }

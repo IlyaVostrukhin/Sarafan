@@ -6,7 +6,7 @@
     import { mapActions } from 'vuex'
 
     export default {
-        name: "LazyLoader",
+        name: 'LazyLoader',
         methods: mapActions(['loadPageAction']),
         mounted() {
             window.onscroll = () => {

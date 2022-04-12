@@ -26,8 +26,8 @@ import java.util.List;
 @EqualsAndHashCode(of = {"id"})
 @Data
 @JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id"
+        property = "id",
+        generator = ObjectIdGenerators.PropertyGenerator.class
 )
 public class Message {
 
@@ -65,9 +65,9 @@ public class Message {
     @JsonView(Views.FullMessage.class)
     private String linkCover;
 
-    public void setComments(List<Comment> comments) {
-        if (comments != null) {
-            this.comments.addAll(comments);
-        }
-    }
+//    public void setComments(List<Comment> comments) {
+//        if (comments != null) {
+//            this.comments.addAll(comments);
+//        }
+//    }
 }

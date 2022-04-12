@@ -2,6 +2,7 @@ package com.projects.sarafan.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.projects.sarafan.domain.User;
+import com.projects.sarafan.domain.UserSubscription;
 import com.projects.sarafan.domain.Views;
 import com.projects.sarafan.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("profile")
@@ -40,5 +43,22 @@ public class ProfileController {
         } else {
             return profileService.changeSubscription(channel, subscriber);
         }
+    }
+
+    @GetMapping("get-subscribers/{channelId}")
+    @JsonView(Views.IdName.class)
+    public List<UserSubscription> subscribers(
+            @PathVariable("channelId") User channel
+    ) {
+        return profileService.getSubscribers(channel);
+    }
+
+    @PostMapping("change-status/{subscriberId}")
+    @JsonView(Views.IdName.class)
+    public UserSubscription changeSubscriptionStatus(
+            @AuthenticationPrincipal User channel,
+            @PathVariable("subscriberId") User subscriber
+    ) {
+        return profileService.changeSubscriptionStatus(channel, subscriber);
     }
 }

@@ -7,8 +7,8 @@
                     <h3>
                         <a :href="message.link">{{message.linkTitle || message.link}}</a>
                     </h3>
+                    <div v-if="message.linkDescription">{{message.linkDescription}}</div>
                 </div>
-                <div v-if="message.linkDescription">{{message.linkDescription}}</div>
             </v-card-title>
         </v-flex>
         <v-flex v-if="type === 'image'" xs12 sm6 offset-sm3>
@@ -24,11 +24,11 @@
 </template>
 
 <script>
-    import YouTube from "./YouTube.vue";
+    import YouTube from './YouTube.vue'
 
     export default {
-        name: "Media",
-        components: {YouTube},
+        name: 'Media',
+        components: { YouTube },
         props: ['message'],
         data() {
             return {
